@@ -1,5 +1,52 @@
-<h2>Sign Page</h2>
-<form method="post">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Register</button>
-</form>
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'users/auth.css' %}">
+    <title>SignUp</title>
+</head>
+<body style="background-color: #F2F2F2;">
+<main class="main">
+    <div class="auth_wrapper">
+        <h2 class="auth_header_text">Sign Up Page</h2>
+        <form method="post" class="auth__form">
+            {% csrf_token %}
+            <div class="auth_item">
+                <input
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        maxlength="150"
+                        autocapitalize="none"
+                        autocomplete="username"
+                        autofocus=""
+                        required=""
+                        id="id_username"
+                >
+                <span>{{ form.username.errors }}</span>
+            </div>
+            <div class="auth_item">
+                <input
+                        type="password"
+                        placeholder="Password"
+                        name="password1"
+                        autocomplete="new-password"
+                        required=""
+                        id="id_password1"
+                >
+                <span>{{ form.password1.errors }}</span>
+            </div>
+            <div class="auth_item">
+                <input type="password" placeholder="Password Confirmation" name="password2" autocomplete="new-password" required="" id="id_password2">
+                <span>{{ form.password2.errors }}</span>
+            </div>
+            <button type="submit" class="auth_button">Register</button>
+        </form>
+        <p class="additional_auth-info">Have an account? <a style="color: blue; text-decoration: underline" href="{% url "users:login" %}">Login</a></p>
+    </div>
+</main>
+</body>
+</html>

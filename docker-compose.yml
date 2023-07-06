@@ -20,7 +20,7 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
-    image: transactions_docker:latest
+    image: transactions_web:latest
     container_name: transactions-rest
     command: >
       bash -c "./manage.py migrate && ./manage.py add_crypto_data && ./manage.py runserver 0.0.0.0:8000"

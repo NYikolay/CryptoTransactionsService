@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'users/auth.css' %}">
+    <title>SignUp</title>
+</head>
+<body style="background-color: #F2F2F2;">
+<main class="main">
+    <div class="auth_wrapper">
+        <h2 class="auth_header_text">Sign Up Page</h2>
+        <form method="post" class="auth__form">
+            {% csrf_token %}
+            <div class="auth_item">
+                <input
+                        type="text"
+                        name="username"
+                        autofocus=""
+                        autocapitalize="none"
+                        placeholder="Username"
+                        autocomplete="username"
+                        maxlength="150"
+                        required=""
+                        id="id_username">
+                <span>{{ form.username.errors }}</span>
+            </div>
+            <div class="auth_item">
+                <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        autocomplete="current-password"
+                        required=""
+                        id="id_password">
+                <span>{{ form.password.errors }}</span>
+            </div>
+            {{ form.errors }}
+            <button type="submit" class="auth_button">Login</button>
+        </form>
+        <p class="additional_auth-info">Don’t have an account? <a style="color: blue; text-decoration: underline" href="{% url "users:register" %}">Sign Up</a></p>
+    </div>
+</main>
+</body>
+</html>

@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from django.views.generic import View
 
-# Create your views here.
+
+class TransactionsList(View):
+    template_name = 'transactions/transactions_list.html'
