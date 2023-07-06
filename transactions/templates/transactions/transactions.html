@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'transactions/transactions.css' %}">
+{% endblock %}
+{% block title %} Transactions {% endblock %}
+
+{% block content %}
+    <div class="transactions__container">
+        <div class="transactions__wrapper">
+            <div class="transactions__inner-wrapper">
+                <div class="transactions__content-wrapper">
+                    <h1>Your transactions list</h1>
+                    <div class="line"></div>
+                    <div class="transactions__content-inner">
+                        {% if transactions %}
+                            {% for transaction in transactions %}
+                                <div class="service__account-item">
+                                    <div class="service__account-item__inner">
+                                        <h3>{{ transaction.sender_address }}</h3>
+                                        <p>Sender Address</p>
+                                    </div>
+                                    <div class="service__account-item__inner">
+                                        <h3>{{ transaction.recipient_address }}</h3>
+                                        <p>Recipient Address</p>
+                                    </div>
+                                    <div class="service__account-item__inner">
+                                        <h3>{{ transaction.amount }}</h3>
+                                        <p>Amount</p>
+                                    </div>
+                                    <div
+                                            class="service__account-item__inner"
+                                    >
+                                        <h3
+                                                {% if transaction.status == transaction_statuses.CANCELED %}
+                                                    style="color: red;"
+                                                {% elif transaction.status == transaction_statuses.ACCEPTED %}
+                                                    style="color: green;"
+                                                {% else %}
+                                                    style="color: orange;"
+                                                {% endif %}
+                                        >
+                                            {{ transaction.status }}
+                                        </h3>
+                                        <p>status</p>
+                                    </div>
+                                    <div class="service__account-item__inner">
+                                        <h3>{{ transaction.created_at }}</h3>
+                                        <p>Transaction creation date</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <h1 style="color: #999999">You don't have Transactions History.....</h1>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="transactions__content-wrapper">
+                    <h1>Create Transaction</h1>
+                    <div class="line"></div>
+                    <form action="{% url 'transactions:create_transaction' %}" method="post" class="transaction__form">
+                        {% csrf_token %}
+                        {{ form }}
+                        <button type="submit" class="send_transaction">Send Transaction</button>
+                    </form>
+                </div>
+            </div>
+            <div class="transactions__inner-wrapper">
+                <div class="transactions__content-wrapper">
+                    <h1>Your Service Accounts</h1>
+                    <div class="line"></div>
+                    <div class="transactions__content-inner">
+                        {% if service_accounts %}
+                            {% for service_account in service_accounts %}
+                                <div class="service__account-item">
+                                    <div class="service__account-item__inner">
+                                        <h3>{{ service_account.wallet_address }}</h3>
+                                        <p>Wallet Address</p>
+                                    </div>
+                                    <div class="service__account-item__inner">
+                                        <h3>{{ service_account.network.name }}</h3>
+                                        <p>Blockchain Network</p>
+                                    </div>
+                                    <div class="service__account-item__inner">
+                                        <h3>{{ service_account.cryptocurrency.name }}</h3>
+                                        <p>Cryptocurrency</p>
+                                    </div>
+                                    <a href="">Check transactions</a>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <h1 style="color: #999999">You don't have Service Accounts.....</h1>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="transactions__content-wrapper">
+                    <h1>Profile</h1>
+                    <div class="line"></div>
+                    <div class="transactions__content-inner">
+                        <p>username: {{ request.user.username }}</p>
+                        <p>email: {% if request.user.email %} {{ request.user.email }}  {% else %} You did not enter an email {% endif %}</p>
+                        <a href="{% url 'users:logout' %}" class="logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+            <div class="transactions__inner-wrapper">
+                <div class="transactions__content-wrapper">
+                    <h1>Your transactions for review</h1>
+                    <div class="line"></div>
+                    {% if for_review_transactions %}
+                        {% for transaction in for_review_transactions %}
+                            <div class="transactions__content-inner">
+                                <div class="service__account-item">
+                                    <div class="service__account-item__inner">
+                                        <h3>{{ transaction.sender_address }}</h3>
+                                        <p>Sender address</p>
+                                    </div>
+                                    <div class="service__account-item__inner">
+                                        <h3>{{ transaction.recipient_address }}</h3>
+                                        <p>recipient address</p>
+                                    </div>
+                                    <div class="service__account-item__inner">
+                                        <h3>{{ transaction.amount }}</h3>
+                                        <p>amount</p>
+                                    </div>
+                                    <div class="transaction__review-wrapper">
+                                        <form
+                                                action="{% url 'transactions:confirm_transaction' transaction.pk %}"
+                                                method="post"
+                                                class="transaction__review-form"
+                                        >
+                                            {% csrf_token %}
+                                            <button type="submit" class="accept__button">Accept</button>
+                                        </form>
+                                        <form
+                                                action="{% url 'transactions:cancel_transaction' transaction.pk %}"
+                                                method="post"
+                                                class="transaction__review-form"
+                                        >
+                                            {% csrf_token %}
+                                            <button type="submit" class="cancel__button">Cancel</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>You don't have Transactions for review.....</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
