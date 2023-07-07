@@ -8,7 +8,7 @@ from transactions.models import Cryptocurrency, Network
 class Command(BaseCommand):
 
     def handle(self, **options):
-        if not Cryptocurrency.objects.exists() and not Network.objects.exists:
+        if not Cryptocurrency.objects.exists() and not Network.objects.exists():
             crypto_df = pd.read_csv('static/excel/crypto_data.csv')
 
             unique_networks = crypto_df['network'].unique().tolist()
