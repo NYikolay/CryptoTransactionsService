@@ -21,4 +21,8 @@ RUN pip install -r requirements.txt
 
 USER transactions_admin
 
+RUN chmod +x wait-for-postgres.sh
+
+CMD ["./wait-for-postgres.sh"]
+
 CMD ["python3 manage.py runserver 0.0.0.0:8000"]

@@ -23,7 +23,7 @@ services:
     image: transactions_web:latest
     container_name: transactions-rest
     command: >
-      bash -c "./wait-for-postgres.sh && ./manage.py migrate && ./manage.py add_crypto_data && ./manage.py runserver 0.0.0.0:8000"
+      bash -c "./manage.py migrate && ./manage.py add_crypto_data && ./manage.py runserver 0.0.0.0:8000"
     volumes:
       - static_volume:/transactions_project/static
       - media_volume:/transactions_project/media
