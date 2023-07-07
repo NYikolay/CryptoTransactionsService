@@ -19,6 +19,8 @@
 2. В корневой папке склонированного репозитория создать файл **.env** и заполнить в соответствии с примером в **.env.dist**
 3. Запустить контейнеры: _docker-compose -f docker-compose.yml up --build_
 4. Создать суперпользователя: _docker exec -it transactions-rest python3 manage.py createsuperuser_
+В случае возникновения ошибки _Is the server running on host "db" (172.21.0.2) and accepting TCP/IP connections on port 5432?_
+остановите и снова запустите контейнеры командой _docker-compose -f docker-compose.yml up_
 
 ### Запуск БЕЗ Docker и Docker-compose
 1. Клонировать репозиторий: _git clone https://github.com/NYikolay/CryptoTransactionsService.git_
