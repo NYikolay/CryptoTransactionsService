@@ -8,7 +8,7 @@ from django.views.generic.edit import FormView
 
 from transactions.services.handling_transaction_confirmation_services import send_transaction_confirmation
 from transactions.forms import TransactionForm
-from transactions.models import TransactionStatuses, Transaction
+from transactions.models import TransactionStatuses, Transaction, ServiceAccount
 
 
 class TransactionsView(LoginRequiredMixin, View):

@@ -15,11 +15,6 @@ DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = ["*"]
 
-INTERNAL_IPS = ["127.0.0.1"]
-
-ip = socket.gethostbyname(socket.gethostname())
-INTERNAL_IPS += [ip[:-1] + '1']
-
 
 # Application definition
 
@@ -32,14 +27,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'transactions',
     'users',
-    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -82,6 +75,13 @@ DATABASES = {
         'PORT': env("DB_PORT")
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
